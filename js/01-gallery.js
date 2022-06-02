@@ -1,4 +1,6 @@
 import { galleryItems } from './gallery-items.js';
+import * as basicLightbox from 'basiclightbox'
+
 
 const galleryListEl = document.querySelector(".gallery");
 const galleryItemEl = galleryItems.map(({ preview, original, description }) => `<div class="gallery__item">
@@ -14,22 +16,11 @@ const galleryItemEl = galleryItems.map(({ preview, original, description }) => `
 
 galleryListEl.insertAdjacentHTML("beforeend", galleryItemEl);
 
-
-const img = document.querySelector('img');
-console.log(img);
-
 galleryListEl.addEventListener("click", (event) => {
     event.preventDefault();
+    console.log(event.target.dataset.source);
     
-    console.log(event.target);
 });
 
-
-// console.log(img.getAttribute("data-source"));
-
-
-
-
-// const img = document.querySelector('img[data-source]')
 
 
