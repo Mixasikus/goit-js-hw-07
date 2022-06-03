@@ -14,17 +14,28 @@ const galleryItemEl = galleryItems.map(({ preview, original, description }) => `
 
 galleryListEl.insertAdjacentHTML("beforeend", galleryItemEl);
 
-galleryListEl.addEventListener("click", (event) => {
+galleryListEl.addEventListener("click", modalShow); 
+
+function modalShow(event) {
   event.preventDefault();
   const isGalleryImage = event.target.classList.contains("gallery__image");
+  
   if (!isGalleryImage) {
     return;
   }
-  console.log(event.target.dataset.source)
-    
-  const instance = basicLightbox.create(`
-   <img src="https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825_1280.jpg">
-  `);
-  instance.show();
-});
+  
+  const modalWindow = basicLightbox.create(`
+  <img src="${event.target.dataset.source}" width="800" height="600">
+  `, {
+    onShow: () => window.addEventListener("keydown", onCloseEscape),
+    onClose: () => window.addEventListener("keydown", onCloseEscape),
+  });
+  
+  modalWindow.show();
+}
 
+function onCloseEscape(event) {
+  if (event.code === "Escape") {
+    modalWindow.onClose();
+  }
+}
